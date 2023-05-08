@@ -10,8 +10,7 @@ int main(){
 	printf("Podaj nazwisko studenta: ");
 	scanf_s("%s", nazwisko, 100);
 
-	printf("Podaj wiek studenta: ");
-	scanf_s("%d", &wiek);
+	wiek = studentAge();
 
 	printf("Podaj kierunek studiow (0-Informatyka, 1-Matematyka, 2-Fizyka): ");
 	scanf_s("%d", &kierunekStudiow);

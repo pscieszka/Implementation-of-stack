@@ -16,5 +16,8 @@ enum kierunek
 	bool studentInit(student* ob, int wiek, char* str, kierunek kierunekStudiow);
 	void studentFree(student* ob);
 	void studentPrint(student* ob);
+	int studentAge();
+
+	
 
 

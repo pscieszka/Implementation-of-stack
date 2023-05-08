@@ -50,3 +50,16 @@ void studentPrint(student* ob)
 		}
 	}
 }
+
+int studentAge() {
+	int wiek;
+	while (true) {
+		printf("Podaj wiek studenta: ");
+		if (scanf_s("%d", &wiek) == 1 && wiek > 0) {
+			break;
+		}
+		printf("Niepoprawny wiek. Wprowadz liczbe calkowita wieksza od 0.\n");
+	}
+	return wiek;
+
+}
