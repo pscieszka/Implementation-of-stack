@@ -23,7 +23,7 @@ int main(){
 	}
 	else
 	{
-		printf("Nie uda³o siê utworzyc obiektu student\n");
+		printf("Nie udalo sie utworzyc obiektu student\n");
 	}
 
 	return 0;
