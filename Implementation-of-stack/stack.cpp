@@ -5,25 +5,43 @@
 #include "student.h"
 #include "stack.h"
 
-struct stack* push(struct stack* top, struct student s)
-{
-    struct stack* newTop = (struct stack*)malloc(sizeof(struct stack));
-    newTop->ob.nazwisko = (char*)malloc((strlen(s.nazwisko) + 1) * sizeof(char));
-    strcpy(newTop->ob.nazwisko, s.nazwisko);
-    newTop->ob.wiek = s.wiek;
-    newTop->ob.kierunekStudiow = s.kierunekStudiow;
-    newTop->ptr = top;
-    return newTop;
+
+void stack_init(Stack* stack) {
+    stack->top = NULL;
 }
 
-struct stack* pop(struct stack* top)
-{
-    if (top == NULL) {
-        printf("Stos jest pusty\n");
-        return NULL;
+void stack_free(Stack* stack) {
+    while (stack->top != NULL) {
+        Node* node = stack->top;
+        stack->top = stack->top->next;
+        free(node->data.nazwisko);
+        free(node);
     }
-    struct stack* newTop = top->ptr;
-    free(top->ob.nazwisko);
-    free(top);
-    return newTop;
+}
+
+void stack_push(Stack* stack, student data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data.nazwisko = (char*)malloc((strlen(data.nazwisko) + 1) * sizeof(char));
+    strcpy_s(newNode->data.nazwisko,strlen(data.nazwisko)+1, data.nazwisko);
+    newNode->data.wiek = data.wiek;
+    newNode->data.kierunekStudiow = data.kierunekStudiow;
+    newNode->next = stack->top;
+    stack->top = newNode;
+}
+
+student stack_pop(Stack* stack) {
+    student emptyStudent;
+    emptyStudent.nazwisko = NULL;
+    emptyStudent.wiek = 0;
+    emptyStudent.kierunekStudiow = INFORMATYKA;
+
+    if (stack->top == NULL) {
+        return emptyStudent;
+    }
+    Node* topNode = stack->top;
+    student data = topNode->data;
+    stack->top = stack->top->next;
+    free(topNode->data.nazwisko);
+    free(topNode);
+    return data;
 }

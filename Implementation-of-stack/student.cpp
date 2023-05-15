@@ -2,9 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <malloc.h>
-#include "message.h"
 #include "student.h"
-
 
 
 bool studentInit(student* ob, int wiek, char* str, kierunek kierunekStudiow)
@@ -47,7 +45,7 @@ void studentPrint(student* ob)
 			printf("Kierunek: Fizyka\n");
 			break;
 		default:
-			messageFun(FIELD_OF_STUDY_WAR);
+			printf("Nieznany kierunek studiow\n");
 			break;
 		}
 	}
