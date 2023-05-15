@@ -35,12 +35,12 @@ int main(){
 
     // Przyk³adowe dane studenta
     student s1;
-    s1.nazwisko = (char*)malloc((strlen("Kowalski") + 1) * sizeof(char));
+    s1.nazwisko = "es";
     s1.wiek = 20;
     s1.kierunekStudiow = INFORMATYKA;
 
     student s2;
-    s2.nazwisko = (char*)malloc((strlen("Kowalski") + 1) * sizeof(char));
+    s2.nazwisko = "Es232";
     s2.wiek = 22;
     s2.kierunekStudiow = MATEMATYKA;
 

@@ -5,19 +5,18 @@
 #include "student.h"
 
 
-bool studentInit(student* ob, int wiek, char* str, kierunek kierunekStudiow)
+void *studentInit(student* ob, int wiek, char nazwisko, kierunek kierunekStudiow)
 {
+	student* ob = (student*)malloc(sizeof(student));
+
 	ob->wiek = wiek;
 	ob->nazwisko = NULL;
-	size_t len = strlen(str);
-	if (len)
-	{
-		ob->nazwisko = (char*)malloc((len + 1) * sizeof(char));
-		if (!ob->nazwisko)
-			return false;
-		strcpy_s(ob->nazwisko, _msize(ob->nazwisko), str);
-	}
-	return true;
+	ob->nazwisko = (char*)malloc(2 * sizeof(char));
+	
+	ob->nazwisko[0] = str;
+	ob->nazwisko[1] = '\0';
+	ob->kierunekStudiow = kierunekStudiow;
+	return (void*)(ob);
 }
 
 void studentFree(student* ob)
