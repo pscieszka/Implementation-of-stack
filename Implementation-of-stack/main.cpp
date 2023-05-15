@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "student.h"
+#include "message.h"
 
 int main(){
 	student s;
