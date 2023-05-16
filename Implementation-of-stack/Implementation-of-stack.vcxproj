@@ -127,12 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="message.cpp" />
     <ClCompile Include="stack.cpp" />
     <ClCompile Include="student.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="interface.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="stack.h" />
     <ClInclude Include="student.h" />

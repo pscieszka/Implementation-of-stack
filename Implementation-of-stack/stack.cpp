@@ -4,7 +4,7 @@
 #include <malloc.h>
 #include "student.h"
 #include "stack.h"
-
+/*
 
 void stack_init(Stack* stack) {
     stack->top = NULL;
@@ -44,4 +44,4 @@ student stack_pop(Stack* stack) {
     free(topNode->data.nazwisko);
     free(topNode);
     return data;
-}
+}*/

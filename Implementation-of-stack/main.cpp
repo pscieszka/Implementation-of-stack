@@ -1,12 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
+/*
 #include <string.h>
 #include "student.h"
 #include "message.h"
 #include "stack.h"
-
+*/
+#include "interface.h"
 int main(){
-	student s;
+
+    menu();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/*student s;
 	char nazwisko[100];
 	int wiek;
 	kierunek kierunekStudiow;
@@ -62,7 +82,7 @@ int main(){
     printf("Kierunek studiow: %d\n", poppedStudent2.kierunekStudiow);
 
     // Zwolnienie pamiêci zajmowanej przez stos
-    stack_free(&stack);
+    stack_free(&stack);*/
 	return 0;
 }
 
