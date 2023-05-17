@@ -9,6 +9,7 @@ enum interface {
 };
 
 void menu();
+void push();
 void pop();
 void clear();
 void find();

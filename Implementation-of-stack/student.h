@@ -13,10 +13,8 @@ enum kierunek
 		kierunek kierunekStudiow;
 	};
 
-	void *studentInit(int wiek, char *str, kierunek kierunekStudiow);
-	void studentFree(student* ob);
-	void studentPrint(student* ob);
-	int studentAge();
+	void* studentInit(char* nazwisko2, int  wiek2, kierunek kierunekStudiow2);
+	void* studentPush(char* nazwisko2, int  wiek2, kierunek kierunekStudiow2);
 
 	
 

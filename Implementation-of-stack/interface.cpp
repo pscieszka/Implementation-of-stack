@@ -3,6 +3,7 @@
 #include <string.h>
 #include <malloc.h>
 #include "interface.h"
+#include "student.h"
 
 const char* tab[] = {
 	"1. Push",
@@ -20,4 +21,18 @@ void menu() {
 	for (int i = 0; i < menuSize; i++) {
 		printf("%s\n", tab[i]);
 	}
+}
+
+void push() {
+	char nazwisko[512];
+	int wiek;
+	kierunek kierunekStudiow;
+	printf("Podaj nazwisko:");
+	scanf("%s", &nazwisko); // error handle
+	printf("\nPodaj wiek:");
+	scanf("%d", &wiek);
+	printf("\nPodaj kierunek studiow (0-Informatyka, 1-Matematyka, 2-Fizyka):");
+	scanf("%d", &kierunekStudiow);
+
+
 }
