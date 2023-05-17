@@ -28,11 +28,11 @@ void push() {
 	int wiek;
 	kierunek kierunekStudiow;
 	printf("Podaj nazwisko:");
-	scanf("%s", &nazwisko); // error handle
+	scanf_s("%s", &nazwisko); // error handle
 	printf("\nPodaj wiek:");
-	scanf("%d", &wiek);
+	scanf_s("%d", &wiek);
 	printf("\nPodaj kierunek studiow (0-Informatyka, 1-Matematyka, 2-Fizyka):");
-	scanf("%d", &kierunekStudiow);
+	scanf_s("%d", &kierunekStudiow);
 
 
 }
