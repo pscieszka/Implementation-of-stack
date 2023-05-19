@@ -6,5 +6,8 @@ typedef struct stack{
     stack* next;
 } stack;
 
+typedef void(*freeData)(void* ptr);
+
+void stackInit();
 stack* stackPush(void* ptr);
 stack stackPop();

@@ -6,8 +6,17 @@
 #include "stack.h"
 
 
-static const stack* top = NULL;
-void stackInit() {
+freeData ptrFree;
+stack* top = NULL;
+
+void stackInit(freeData ptrFree2) {
+	top = NULL;
+	ptrFree = ptrFree2;
+}
+void stackFree() {
+	stack* ptr =top;
+	stack* temp = NULL;
+	while()
 }
 
 stack* push(void* ptr) {
