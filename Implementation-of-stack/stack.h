@@ -8,6 +8,9 @@ typedef struct stack{
 
 typedef void(*freeData)(void* ptr);
 
-void stackInit();
+void stackInit(freeData ptrFree2);
+void stackFree();
 stack* stackPush(void* ptr);
 stack stackPop();
+stack* stackTop();
+
