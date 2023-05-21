@@ -10,7 +10,7 @@ int main(){
 	stackInit(studentFree);
     
 	int i=0;
-	while (i != 5) {
+	while (true) {
 		menu();
 		scanf_s("%d", &i);
 		switch (i) {
@@ -24,9 +24,9 @@ int main(){
 			break;
 		case SHOW: show();
 			break;
-		case READ_STACK: clear();
+		case READ_STACK: readStack();
 			break;
-		case SAVE_STACK: clear();
+		case SAVE_STACK: saveStack();
 			break;
 		case READ_ONE_STUDENT: readStudent();
 			break;

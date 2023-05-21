@@ -4,7 +4,7 @@
 enum messages
 {
 	ALLOC_ERROR,
-	FIELD_OF_STUDY_WAR
+	FILE_WARNING
 };
 
 void messageFun(enum messages mess);

@@ -82,4 +82,55 @@ void* stackSearch(void* searchData, compData ptrComp, int firstEntry) {
 	
 
 }
+void stackSave(const char* filename) {
+	FILE* file;
+	if (fopen_s(&file, filename, "wb") != 0)
+	{
+		printf("Error opening file for writing.\n");
+		return;
+	}
 
+	stack* curr = top;
+	while (curr != NULL) {
+		struct student* stud = (struct student*)(curr->dataPtr);
+		fwrite(stud, sizeof(struct student), 1, file);
+		curr = curr->next;
+	}
+
+	fclose(file);
+	stackFree();
+}
+
+void stackRead(const char* filename) {
+	FILE* file;
+	if (fopen_s(&file, filename, "rb") != 0)
+	{
+		printf("Error opening file for reading.\n");
+		return;
+	}
+
+	stackFree();
+
+	struct student* stud = (struct student*)malloc(sizeof(struct student));
+	if (stud == NULL)
+	{
+		printf("Memory allocation failed.\n");
+		fclose(file);
+		return;
+	}
+
+	while (fread(stud, sizeof(struct student), 1, file) == 1) {
+		stackPush(stud);
+
+		stud = (struct student*)malloc(sizeof(struct student));
+		if (stud == NULL)
+		{
+			printf("Memory allocation failed.\n");
+			fclose(file);
+			return;
+		}
+	}
+
+	free(stud);
+	fclose(file);
+}

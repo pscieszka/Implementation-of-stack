@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "message.h"
+#include "stack.h"
 
 
 static const  char* message_str_tab[] = {
-	"E memory allocation error",     //MEM_ERROR
-	"W field of study not found",	 //FIELD_OF_STUDY_ERROR		
+	"E memory allocation error",     
+	"W file warning, failed save or read",	 	
 };
 
 void messageFun(enum messages mess)
@@ -17,7 +18,7 @@ void messageFun(enum messages mess)
 	
 	if (message_str_tab[mess][0] == 'E')
 	{
-		//deloc
+		stackFree();
 		system("pause");
 	}
 

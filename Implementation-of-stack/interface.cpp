@@ -38,15 +38,33 @@ void push() {
 	int wiek;
 	kierunek kierunekStudiow;
 	printf("Podaj nazwisko:");
-	scanf_s("%s",nazwisko, sizeof(nazwisko)); // error handle
+	if (scanf_s("%s", nazwisko, sizeof(nazwisko)) != 1) {
+		printf("Bledne dane: niepoprawne nazwisko\n");
+		while (getchar() != '\n') {}
+		return;
+	}
+	while (getchar() != '\n') {}
+	
+
 	printf("\nPodaj wiek:");
-	scanf_s("%d", &wiek);
+	if (scanf_s("%d", &wiek) != 1 || wiek < 0 || wiek>200) {
+		printf("Bledne dane: niepoprawny wiek\n");
+		while (getchar() != '\n') {}
+		return;
+	}
 	printf("\nPodaj kierunek studiow (0-Informatyka, 1-Matematyka, 2-Fizyka):");
-	scanf_s("%d", &kierunekStudiow);
+
+	
+	if(scanf_s("%d", &kierunekStudiow) != 1 || (kierunekStudiow != 0 && kierunekStudiow != 1 && kierunekStudiow != 2)) {
+		printf("Bledne dane: niepoprawny kierunek studiow\n");
+		while (getchar() != '\n') {}
+		return;
+	}
 	void* ptr = studentPush(nazwisko, wiek, kierunekStudiow);
-	if (!stackPush(ptr))
-		printf("push error\n");
+		if (!stackPush(ptr))
+			printf("push error\n");
 }
+
 
 void pop() {
 	if (stackTop() == NULL) {
@@ -100,6 +118,14 @@ void show() {
 		studentPrint(ptr->dataPtr);
 		ptr = ptr->next;
 	}
+}
+
+void readStack() {
+	stackRead("stackdata.bin");
+}
+
+void saveStack() {
+	stackSave("stackdata.bin");
 }
 
 void readStudent() {

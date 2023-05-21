@@ -19,6 +19,8 @@ void pop();
 void find();
 void show();
 void clear();
+void readStack();
+void saveStack();
 void readStudent();
 void saveStudent();
 

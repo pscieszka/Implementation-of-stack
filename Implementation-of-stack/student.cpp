@@ -31,6 +31,8 @@ void  studentPrint(void* ptr) {
 		printf("Kierunek: %d\n", studentPtr->kierunekStudiow);
 	}
 }
+
+
 int	studentSearch(void* currData, void* searchData) {
 	student* curr = (student*)currData;
 	student* search = (student*)searchData;
