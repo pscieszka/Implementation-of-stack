@@ -41,7 +41,7 @@ int	studentSearch(void* currData, void* searchData) {
 void  saveStudentToFile(const char* filename, void* ptr) {
 	if (ptr == NULL)
 	{
-		printf("Cannot save NULL student pointer.\n");
+		printf("Nie mozna zapisac.\n");
 		return;
 	}
 
@@ -49,7 +49,7 @@ void  saveStudentToFile(const char* filename, void* ptr) {
 	FILE* file;
 	if (fopen_s(&file, filename, "wb") != 0)
 	{
-		printf("Error opening file for writing.\n");
+		printf("Error, file.\n");
 		return;
 	}
 	
@@ -63,7 +63,7 @@ void* loadStudentFromFile(const char* filename) {
 	FILE* file;
 	if (fopen_s(&file, filename, "rb") != 0)
 	{
-		printf("Error opening file for writing.\n");
+		printf("Error, file.\n");
 		return NULL;
 	}
 

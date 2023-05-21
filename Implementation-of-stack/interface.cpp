@@ -25,7 +25,11 @@ const int menuSize = sizeof(tab) / sizeof(tab[0]);
 void menu() {
 	printf("Wybierz opcje:\n");
 	for (int i = 0; i < menuSize; i++) {
-		printf("%s\n", tab[i]);
+		if (tab[i] == "7. Read student to file")
+			printf("7. Read student to file - zapis/odczyt maksymalnie 1 rekordu(read->stackPush, save->stackPop)\n");
+		else
+			printf("%s\n", tab[i]);
+		
 	}
 }
 
@@ -96,9 +100,6 @@ void show() {
 		studentPrint(ptr->dataPtr);
 		ptr = ptr->next;
 	}
-		
-	
-	
 }
 
 void readStudent() {
@@ -112,7 +113,7 @@ void readStudent() {
 void saveStudent() {
 	stack* curr = stackTop();
 	if (curr == NULL) {
-		printf("No student data available to save.\n");
+		printf("Brak danych do zapisu.\n");
 		return;
 	}
 
