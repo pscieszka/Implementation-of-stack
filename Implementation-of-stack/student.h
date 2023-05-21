@@ -18,7 +18,8 @@ enum kierunek
 	void* studentPush(char* nazwisko, int  wiek, kierunek kierunekStudiow);
 	void  studentPrint(void* ptr);
 	int	  studentSearch(void* currData, void* searchData);
-
+	void  saveStudentToFile(const char* filename, void* ptr);
+	void* loadStudentFromFile(const char* filename);
 	
 
 

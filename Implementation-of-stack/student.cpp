@@ -38,3 +38,45 @@ int	studentSearch(void* currData, void* searchData) {
 		return 1;
 	return 0;
 }
+void  saveStudentToFile(const char* filename, void* ptr) {
+	if (ptr == NULL)
+	{
+		printf("Cannot save NULL student pointer.\n");
+		return;
+	}
+
+	struct student* stud = (struct student*)ptr;
+	FILE* file;
+	if (fopen_s(&file, filename, "wb") != 0)
+	{
+		printf("Error opening file for writing.\n");
+		return;
+	}
+	
+
+	fwrite(stud, sizeof(struct student), 1, file);
+	fclose(file);
+}
+
+
+void* loadStudentFromFile(const char* filename) {
+	FILE* file;
+	if (fopen_s(&file, filename, "rb") != 0)
+	{
+		printf("Error opening file for writing.\n");
+		return NULL;
+	}
+
+	struct student* stud = (struct student*)malloc(sizeof(struct student));
+	if (stud == NULL)
+	{
+		printf("Memory allocation failed.\n");
+		fclose(file);
+		return NULL;
+	}
+
+	fread(stud, sizeof(struct student), 1, file);
+	fclose(file);
+
+	return stud;
+}

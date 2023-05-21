@@ -22,6 +22,16 @@ int main(){
 			break;
 		case CLEAR: clear();
 			break;
+		case SHOW: show();
+			break;
+		case READ_STACK: clear();
+			break;
+		case SAVE_STACK: clear();
+			break;
+		case READ_ONE_STUDENT: readStudent();
+			break;
+		case SAVE_ONE_STUDENT:saveStudent();
+			break;
 		case STOP: return 0;
 		default:
 			printf("Niepoprawny wybor\n");

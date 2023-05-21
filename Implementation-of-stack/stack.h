@@ -15,4 +15,5 @@ stack* stackPush(void* ptr);
 stack stackPop();
 stack* stackTop();
 void* stackSearch(void* searchData, compData ptrComp, int firstEntry);
-
+void saveStackToFile(const char* filename);
+void loadStackFromFile(const char* filename);

@@ -1,7 +1,9 @@
 #pragma once
+
+
 enum messages
 {
-	MEM_ERROR,
+	ALLOC_ERROR,
 	FIELD_OF_STUDY_WAR
 };
 
