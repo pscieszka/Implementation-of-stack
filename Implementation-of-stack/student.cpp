@@ -78,5 +78,6 @@ void* loadStudentFromFile(const char* filename) {
 	fread(stud, sizeof(struct student), 1, file);
 	fclose(file);
 
+
 	return stud;
 }

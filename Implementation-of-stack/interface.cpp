@@ -91,18 +91,35 @@ void clear()
 }
 void show() {
 	stack* ptr = stackTop();
-	if (ptr)
+	if (!ptr) printf("Stos jest pusty\n");
+	while (ptr) {
 		studentPrint(ptr->dataPtr);
-	else
-		printf("Stos jest pusty\n");
+		ptr = ptr->next;
+	}
+		
+	
+	
 }
 
 void readStudent() {
-	void* ptr = loadStudentFromFile("test.bin");
-	studentPrint(ptr->dataPtr);
+	void* ptr = loadStudentFromFile("student.bin");
+	if (ptr != NULL) {
+		stackPush(ptr);
+		studentPrint(ptr);
+	}
 }
 
 void saveStudent() {
-	stack* ptr = stackTop();
-	saveStudentToFile("test.bin", ptr);
+	stack* curr = stackTop();
+	if (curr == NULL) {
+		printf("No student data available to save.\n");
+		return;
+	}
+
+	void* ptr = curr->dataPtr;
+	stackPop();
+
+	saveStudentToFile("student.bin", ptr);
+	studentPrint(ptr);
+	free(ptr);
 }
