@@ -9,8 +9,8 @@
 const char* tab[] = {
 	"0. Push",
 	"1. Pop",
-	"2. Clear",
-	"3. Find",
+	"2. Find",
+	"3. Clear",
 	"4. Finish"
 
 };
@@ -50,4 +50,33 @@ void pop() {
 		studentPrint(temp.dataPtr);
 		studentFree(temp.dataPtr);
 	}
+}
+
+void find() {
+	char nazwisko2[128];
+	printf("Podaj nazwisko:");
+	scanf_s("%s", nazwisko2, sizeof(nazwisko2));
+	student searchData;
+	memset(&searchData, 0, sizeof(student));
+	strcpy_s(searchData.nazwisko, sizeof(searchData.nazwisko), nazwisko2);
+	
+	void* ptrData = stackSearch(&searchData, studentSearch, 1);
+
+	if (ptrData) {
+		printf("Znaleziono studenta:\n");
+		studentPrint(ptrData);
+	}
+
+	while (ptrData) {
+		ptrData = stackSearch(&searchData, studentSearch, 0);
+		if (ptrData) {
+			printf("Znaleziono studenta:\n");
+			studentPrint(ptrData);
+		}
+	}
+}
+
+void clear()
+{
+	stackFree();
 }

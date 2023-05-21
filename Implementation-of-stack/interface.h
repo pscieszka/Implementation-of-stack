@@ -3,14 +3,15 @@
 enum interface {
 	PUSH,
 	POP,
-	CLEAR,
 	FIND,
+	CLEAR,
 	STOP
 };
 
 void menu();
 void push();
 void pop();
-void clear();
 void find();
+void clear();
+
 

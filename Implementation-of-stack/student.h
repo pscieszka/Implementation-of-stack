@@ -17,6 +17,7 @@ enum kierunek
 	void  studentFree(void* ptr);
 	void* studentPush(char* nazwisko, int  wiek, kierunek kierunekStudiow);
 	void  studentPrint(void* ptr);
+	int	  studentSearch(void* currData, void* searchData);
 
 	
 

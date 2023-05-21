@@ -59,3 +59,26 @@ stack stackPop() {
 stack* stackTop() {
 	return top;
 }
+void* stackSearch(void* searchData, compData ptrComp, int firstEntry) {
+	static stack* ptr;
+	stack* ptr2 = NULL;
+	if (firstEntry) {
+		ptr = top;
+	}
+	if (ptr == NULL) {
+		return NULL;
+	}
+	while (ptr) {
+		if (!(*ptrComp)(ptr->dataPtr, searchData)) {
+			ptr = ptr->next;
+		}
+		else {
+			ptr2 = ptr;
+			ptr = ptr->next;
+			return ptr2->dataPtr;
+		}
+	}
+	return NULL;
+	
+
+}

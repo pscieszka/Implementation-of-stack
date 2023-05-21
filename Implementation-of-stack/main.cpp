@@ -18,6 +18,10 @@ int main(){
 			break;
 		case POP: pop();
 			break;
+		case FIND: find();
+			break;
+		case CLEAR: clear();
+			break;
 		case STOP: return 0;
 		default:
 			printf("Niepoprawny wybor\n");
