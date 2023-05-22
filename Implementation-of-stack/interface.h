@@ -24,7 +24,7 @@ void readStack();
 void saveStack();
 void readStudent();
 void saveStudent();
-void clearFiles();
+void deleteFiles();
 
 
 

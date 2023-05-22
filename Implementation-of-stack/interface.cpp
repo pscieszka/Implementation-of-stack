@@ -156,19 +156,19 @@ void saveStudent() {
 	free(ptr);
 }
 
-void clearFiles() { //funkcja otwiera plik w trybie binary write,a nastepnie zostaje od razu zamkniety co powoduje usuniecie zawartosci pliku
-	FILE* studentFile;
-	if (fopen_s(&studentFile, "student.bin", "wb") != 0) {
-		printf("Nie mo¿na otworzyæ pliku student.bin.\n");
-		return;
+void deleteFiles() {
+	
+	int flag = 0;
+	if (remove("student.bin") != 0) {
+		printf("Nie mozna usunac pliku student.bin.\n");
+		flag = 1;
 	}
-	fclose(studentFile);
 
-	FILE* stackDataFile;
-	if (fopen_s(&stackDataFile, "stackdata.bin", "wb") != 0) {
-		printf("Nie mo¿na otworzyæ pliku stackdata.bin.\n");
-		return;
+	
+	if (remove("stackdata.bin") != 0) {
+		printf("Nie mozna usunac pliku stackdata.bin.\n");
+		flag = 1;
 	}
-	fclose(stackDataFile);
-	printf("\nPliki poprawnie wyczyszczone\n\n");
+	if(!flag)
+		printf("\nPliki poprawnie wyczyszczone\n\n");
 }

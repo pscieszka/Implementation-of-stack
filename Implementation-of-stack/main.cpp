@@ -33,7 +33,7 @@ int main() {
 				break;
 			case SAVE_ONE_STUDENT: saveStudent(); // wczytanie jednego studenta z pliku do stosu
 				break;
-			case CLEAR_FILES: clearFiles(); // wyczyszczenie zawartosci plikow
+			case CLEAR_FILES: deleteFiles(); // usuwanie plikow z danymi
 				break;
 			case STOP: return 0;
 			default:

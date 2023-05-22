@@ -28,7 +28,20 @@ void  studentPrint(void* ptr) {
 	if (studentPtr) {
 		printf("Nazwisko: %s\n", studentPtr->nazwisko);
 		printf("Wiek: %d\n", studentPtr->wiek);
-		printf("Kierunek: %d\n", studentPtr->kierunekStudiow);
+		switch (studentPtr->kierunekStudiow) {
+		case INFORMATYKA:
+			printf("Kierunek: Informatyka\n");
+			break;
+		case MATEMATYKA:
+			printf("Kierunek: Matematyka\n");
+			break;
+		case FIZYKA:
+			printf("Kierunek: Fizyka\n");
+			break;
+		default:
+			printf("Kierunek: Nieznany\n");
+			break;
+		}
 	}
 }
 
