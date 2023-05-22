@@ -1,45 +1,50 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include "student.h"
 #include "message.h"
 #include "stack.h"
 #include "interface.h"
 
-int main(){
+int main() {
 	stackInit(studentFree);
-    
-	int i=0;
+
+	int i = 0;
 	while (true) {
 		menu();
-		scanf_s("%d", &i);
-		switch (i) {
-		case PUSH: push();
-			break;
-		case POP: pop();
-			break;
-		case FIND: find();
-			break;
-		case CLEAR: clear();
-			break;
-		case SHOW: show();
-			break;
-		case READ_STACK: readStack();
-			break;
-		case SAVE_STACK: saveStack();
-			break;
-		case READ_ONE_STUDENT: readStudent();
-			break;
-		case SAVE_ONE_STUDENT:saveStudent();
-			break;
-		case STOP: return 0;
-		default:
+		if (scanf_s("%d", &i) == 1) { // sprawdzamy czy na wejsciu podany jest typ int
+			switch (i) {
+			case PUSH: push(); //dodanie elementu na szczyt stosu
+				break;
+			case POP: pop(); //wyrzucenie elementy z gory stosu oraz wypisanie go w stdout
+				break;
+			case FIND: find(); // wyszukiwanie studenta po nazwisku w stosie i wyswietlanie jego danych
+				break;
+			case CLEAR: clear(); // czyszczenie stosu
+				break;
+			case SHOW: show(); //wyswietlanie calego stosu
+				break;
+			case READ_STACK: readStack(); // zapisanie calego stosu do pliku
+				break;
+			case SAVE_STACK: saveStack(); //wczytanie calego pliku do stosu
+				break;
+			case READ_ONE_STUDENT: readStudent(); // zapis jednego studenta do pliku
+				break;
+			case SAVE_ONE_STUDENT: saveStudent(); // wczytanie jednego studenta z pliku do stosu
+				break;
+			case CLEAR_FILES: clearFiles(); // wyczyszczenie zawartosci plikow
+				break;
+			case STOP: return 0;
+			default:
+				printf("Niepoprawny wybor\n");
+			};
+		}
+		else {
 			printf("Niepoprawny wybor\n");
-		};
+		}
+		while (getchar() != '\n');
 	}
-	
 
 	return 0;
 }
-
-

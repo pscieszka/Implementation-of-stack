@@ -105,7 +105,7 @@ void stackRead(const char* filename) {
 	FILE* file;
 	if (fopen_s(&file, filename, "rb") != 0)
 	{
-		printf("Error opening file for reading.\n");
+		printf("Error otwierania pliku.\n");
 		return;
 	}
 
@@ -114,7 +114,7 @@ void stackRead(const char* filename) {
 	struct student* stud = (struct student*)malloc(sizeof(struct student));
 	if (stud == NULL)
 	{
-		printf("Memory allocation failed.\n");
+		printf("Memory allocation error.\n");
 		fclose(file);
 		return;
 	}
@@ -125,7 +125,7 @@ void stackRead(const char* filename) {
 		stud = (struct student*)malloc(sizeof(struct student));
 		if (stud == NULL)
 		{
-			printf("Memory allocation failed.\n");
+			printf("Memory allocation error.\n");
 			fclose(file);
 			return;
 		}

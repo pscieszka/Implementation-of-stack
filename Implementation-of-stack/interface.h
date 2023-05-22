@@ -10,10 +10,11 @@ enum interface {
 	SAVE_STACK,
 	READ_ONE_STUDENT,
 	SAVE_ONE_STUDENT,
+	CLEAR_FILES,
 	STOP
 };
 
-void menu();
+void menu(); 
 void push();
 void pop();
 void find();
@@ -23,6 +24,7 @@ void readStack();
 void saveStack();
 void readStudent();
 void saveStudent();
+void clearFiles();
 
 
 

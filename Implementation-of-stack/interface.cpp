@@ -16,7 +16,8 @@ const char* tab[] = {
 	"6. Save stack to file",
 	"7. Read student to file",
 	"8. Save student to file",
-	"9. Finish"
+	"9. Clear files",
+	"10. Finish"
 
 };
 
@@ -38,8 +39,8 @@ void push() {
 	int wiek;
 	kierunek kierunekStudiow;
 	printf("Podaj nazwisko:");
-	if (scanf_s("%s", nazwisko, sizeof(nazwisko)) != 1) {
-		printf("Bledne dane: niepoprawne nazwisko\n");
+	if (scanf_s("%s", nazwisko, sizeof(nazwisko)) != 1) { //zabezpiecznie przed za dlugim ciagiem znakow oraz inputem typu "abc abc"
+		printf("Bledne dane: niepoprawne nazwisko\n");    //w przypadku spacji do zmiennej nazwisko zapisze sie ciag zankow przed pierwszym pojawieniem sie spacji
 		while (getchar() != '\n') {}
 		return;
 	}
@@ -47,7 +48,7 @@ void push() {
 	
 
 	printf("\nPodaj wiek:");
-	if (scanf_s("%d", &wiek) != 1 || wiek < 0 || wiek>200) {
+	if (scanf_s("%d", &wiek) != 1 || wiek < 0 || wiek>200) { //wiek powienien byc wiekszy od 0 i mniejszy od 200, zabezpiecznie przed inputem innym niz int
 		printf("Bledne dane: niepoprawny wiek\n");
 		while (getchar() != '\n') {}
 		return;
@@ -55,7 +56,7 @@ void push() {
 	printf("\nPodaj kierunek studiow (0-Informatyka, 1-Matematyka, 2-Fizyka):");
 
 	
-	if(scanf_s("%d", &kierunekStudiow) != 1 || (kierunekStudiow != 0 && kierunekStudiow != 1 && kierunekStudiow != 2)) {
+	if(scanf_s("%d", &kierunekStudiow) != 1 || (kierunekStudiow != 0 && kierunekStudiow != 1 && kierunekStudiow != 2)) { //kierunek moze byc tylko 0,1 lub 2, zabezpiecznie przed inputem innym niz int
 		printf("Bledne dane: niepoprawny kierunek studiow\n");
 		while (getchar() != '\n') {}
 		return;
@@ -83,7 +84,11 @@ void find() {
 	char nazwisko2[128];
 	int found = 0;
 	printf("Podaj nazwisko:");
-	scanf_s("%s", nazwisko2, sizeof(nazwisko2));
+	if (scanf_s("%s", nazwisko2, sizeof(nazwisko2)) != 1) { //analogiczne zabezpiecznie jak w funkcji push()
+		printf("Bledne dane: niepoprawne nazwisko\n");
+		while (getchar() != '\n') {}
+		return;
+	}
 	student searchData;
 	memset(&searchData, 0, sizeof(student));
 	strcpy_s(searchData.nazwisko, sizeof(searchData.nazwisko), nazwisko2);
@@ -149,4 +154,21 @@ void saveStudent() {
 	saveStudentToFile("student.bin", ptr);
 	studentPrint(ptr);
 	free(ptr);
+}
+
+void clearFiles() { //funkcja otwiera plik w trybie binary write,a nastepnie zostaje od razu zamkniety co powoduje usuniecie zawartosci pliku
+	FILE* studentFile;
+	if (fopen_s(&studentFile, "student.bin", "wb") != 0) {
+		printf("Nie mo¿na otworzyæ pliku student.bin.\n");
+		return;
+	}
+	fclose(studentFile);
+
+	FILE* stackDataFile;
+	if (fopen_s(&stackDataFile, "stackdata.bin", "wb") != 0) {
+		printf("Nie mo¿na otworzyæ pliku stackdata.bin.\n");
+		return;
+	}
+	fclose(stackDataFile);
+	printf("\nPliki poprawnie wyczyszczone\n\n");
 }
