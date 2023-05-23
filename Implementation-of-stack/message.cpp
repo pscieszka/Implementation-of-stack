@@ -6,8 +6,11 @@
 
 
 static const  char* message_str_tab[] = {
-	"E memory allocation error",     
-	"W file warning, failed save or read",	 	
+	"ERROR: memory allocation error",     
+	"WARNING: open file failed: check if file exists",
+	"WARNING: file operations failed",
+	"WARNING: read from file failed",
+	"WARNING: stack push error",
 };
 
 void messageFun(enum messages mess)

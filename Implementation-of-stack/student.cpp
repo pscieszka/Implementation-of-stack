@@ -3,6 +3,7 @@
 #include <string.h>
 #include <malloc.h>
 #include "student.h"
+#include "message.h"
 
 void* studentInit(char* nazwisko2, int  wiek2, kierunek kierunekStudiow2) {
 	student* studentPtr = (student*)malloc(sizeof(student));
@@ -64,7 +65,7 @@ void  saveStudentToFile(const char* filename, void* ptr) {
 	FILE* file;
 	if (fopen_s(&file, filename, "wb") != 0)
 	{
-		printf("Error, file.\n");
+		messageFun(ALLOC_ERROR);
 		return;
 	}
 	

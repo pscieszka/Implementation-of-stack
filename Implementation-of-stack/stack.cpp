@@ -3,6 +3,7 @@
 #include <string.h>
 #include <malloc.h>
 #include "student.h"
+#include "message.h"
 #include "stack.h"
 
 
@@ -86,7 +87,7 @@ void stackSave(const char* filename) {
 	FILE* file;
 	if (fopen_s(&file, filename, "wb") != 0)
 	{
-		printf("Error opening file for writing.\n");
+		messageFun(FILE_OPEN_FAILED);
 		return;
 	}
 
@@ -104,40 +105,41 @@ void stackSave(const char* filename) {
 void stackRead(const char* filename) {
 	FILE* file;
 	if (fopen_s(&file, filename, "rb") != 0) {
-		printf("Error otwierania pliku.\n");
+		messageFun(FILE_OPEN_FAILED);
 		return;
 	}
 
-	// Ustawienie wskaŸnika na koniec pliku
+	
 	if (fseek(file, 0, SEEK_END) != 0) {
-		printf("Error ustawiania wskaŸnika na koniec pliku.\n");
+		messageFun(FILE_OPERATION_FAILED);
 		fclose(file);
 		return;
 	}
 
-	// Okreœlenie rozmiaru pliku
+	//obliczanie wielkosc wielkosci pliku, wskaznik jest ustawiony na koniec pliku,a funkcja ftell podaje liczbe bajtow calego pliku
 	long fileSize = ftell(file);
 	if (fileSize == -1) {
-		printf("Error okreœlania rozmiaru pliku.\n");
+		messageFun(FILE_OPERATION_FAILED);
 		fclose(file);
 		return;
 	}
 
-	// Przesuniêcie wskaŸnika o jeden rekord wstecz
+	//wielkosc jedngo rekordu jest rowna wielkosci struktury student, przesuwamy wskaznik w pliku o wielkosc jednej struktury w prawo
 	int recordSize = sizeof(struct student);
-	fseek(file, -recordSize, SEEK_END);
+	fseek(file, -recordSize, SEEK_END); 
 
-	// Odczytywanie danych wstecz i dodawanie ich do stosu
+	
 	while (fileSize > 0) {
 		struct student* stud = (struct student*)malloc(recordSize);
 		if (stud == NULL) {
-			printf("Memory allocation error.\n");
+			messageFun(ALLOC_ERROR);
 			fclose(file);
 			return;
 		}
 
 		if (fread(stud, recordSize, 1, file) != 1) {
-			printf("Error odczytywania danych z pliku.\n");
+			messageFun(READ_FROM_FILE_FAILED);
+
 			free(stud);
 			fclose(file);
 			return;
@@ -145,8 +147,19 @@ void stackRead(const char* filename) {
 
 		stackPush(stud);
 
-		// Przesuniêcie wskaŸnika o jeden rekord wstecz
+		//wskaznik musi byc przesniuty o 2 wielkosci strukutry, poniewaz po wczytaniu studenta wskaznik przesuwa sie o recordSize w lewo,
+		//wiec zeby odczytac nastepnego studenta musimy przesunac sie o 2*recordSize w prawo
+		//np.
+		// A B C D E     na poczatku  wskaznik jest na koncu D
+		//       ^ 
+		// A B C D E     wczytujemy E i wskaznik jest na koncu E
+		//         ^
+		// A B C D E     cofamy wskaznik o 2 pozycje zeby wczytac D
+		//	   ^	
+		//itd...
+
 		fseek(file, -2 * recordSize, SEEK_CUR);
+		// Aktualizujemy liczby studentow do wczytania
 		fileSize -= recordSize;
 	}
 

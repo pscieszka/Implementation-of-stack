@@ -5,6 +5,8 @@
 #include "interface.h"
 #include "student.h"
 #include "stack.h"
+#include "message.h"
+
 
 const char* tab[] = {
 	"0. Push",
@@ -62,8 +64,8 @@ void push() {
 		return;
 	}
 	void* ptr = studentPush(nazwisko, wiek, kierunekStudiow);
-		if (!stackPush(ptr))
-			printf("push error\n");
+	if (!stackPush(ptr))
+		messageFun(PUSH_ERROR);
 }
 
 
@@ -160,13 +162,13 @@ void deleteFiles() {
 	
 	int flag = 0;
 	if (remove("student.bin") != 0) {
-		printf("Nie mozna usunac pliku student.bin.\n");
+		printf("Nie mozna usunac pliku student.bin (prawdopodobnie plik nie istnieje).\n");
 		flag = 1;
 	}
 
 	
 	if (remove("stackdata.bin") != 0) {
-		printf("Nie mozna usunac pliku stackdata.bin.\n");
+		printf("Nie mozna usunac pliku stackdata.bin (prawdopodobnie plik nie istnieje).\n");
 		flag = 1;
 	}
 	if(!flag)
