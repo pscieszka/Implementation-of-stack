@@ -146,17 +146,18 @@ void stackRead(const char* filename) {
 		}
 
 		stackPush(stud);
-
-		//wskaznik musi byc przesniuty o 2 wielkosci strukutry, poniewaz po wczytaniu studenta wskaznik przesuwa sie o recordSize w lewo,
-		//wiec zeby odczytac nastepnego studenta musimy przesunac sie o 2*recordSize w prawo
-		//np.
-		// A B C D E     na poczatku  wskaznik jest na koncu D
-		//       ^ 
-		// A B C D E     wczytujemy E i wskaznik jest na koncu E
-		//         ^
-		// A B C D E     cofamy wskaznik o 2 pozycje zeby wczytac D
-		//	   ^	
-		//itd...
+		/*
+		wskaznik musi byc przesniuty o 2 wielkosci strukutry, poniewaz po wczytaniu studenta wskaznik przesuwa sie o recordSize w lewo,
+		wiec zeby odczytac nastepnego studenta musimy przesunac sie o 2*recordSize w prawo
+		np.
+		A B C D E     na poczatku  wskaznik jest na koncu D
+		       ^ 
+		 A B C D E     wczytujemy E i wskaznik jest na koncu E
+		         ^
+		 A B C D E     cofamy wskaznik o 2 pozycje zeby wczytac D
+			   ^	
+		itd
+		*/
 
 		fseek(file, -2 * recordSize, SEEK_CUR);
 		// Aktualizujemy liczby studentow do wczytania
