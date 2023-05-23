@@ -103,34 +103,52 @@ void stackSave(const char* filename) {
 
 void stackRead(const char* filename) {
 	FILE* file;
-	if (fopen_s(&file, filename, "rb") != 0)
-	{
+	if (fopen_s(&file, filename, "rb") != 0) {
 		printf("Error otwierania pliku.\n");
 		return;
 	}
 
-	stackFree();
-
-	struct student* stud = (struct student*)malloc(sizeof(struct student));
-	if (stud == NULL)
-	{
-		printf("Memory allocation error.\n");
+	// Ustawienie wskaŸnika na koniec pliku
+	if (fseek(file, 0, SEEK_END) != 0) {
+		printf("Error ustawiania wskaŸnika na koniec pliku.\n");
 		fclose(file);
 		return;
 	}
 
-	while (fread(stud, sizeof(struct student), 1, file) == 1) {
-		stackPush(stud);
+	// Okreœlenie rozmiaru pliku
+	long fileSize = ftell(file);
+	if (fileSize == -1) {
+		printf("Error okreœlania rozmiaru pliku.\n");
+		fclose(file);
+		return;
+	}
 
-		stud = (struct student*)malloc(sizeof(struct student));
-		if (stud == NULL)
-		{
+	// Przesuniêcie wskaŸnika o jeden rekord wstecz
+	int recordSize = sizeof(struct student);
+	fseek(file, -recordSize, SEEK_END);
+
+	// Odczytywanie danych wstecz i dodawanie ich do stosu
+	while (fileSize > 0) {
+		struct student* stud = (struct student*)malloc(recordSize);
+		if (stud == NULL) {
 			printf("Memory allocation error.\n");
 			fclose(file);
 			return;
 		}
+
+		if (fread(stud, recordSize, 1, file) != 1) {
+			printf("Error odczytywania danych z pliku.\n");
+			free(stud);
+			fclose(file);
+			return;
+		}
+
+		stackPush(stud);
+
+		// Przesuniêcie wskaŸnika o jeden rekord wstecz
+		fseek(file, -2 * recordSize, SEEK_CUR);
+		fileSize -= recordSize;
 	}
 
-	free(stud);
 	fclose(file);
 }
