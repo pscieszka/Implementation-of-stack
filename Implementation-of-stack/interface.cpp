@@ -37,7 +37,7 @@ void menu() {
 }
 
 void push() {
-	char nazwisko[512];
+	char nazwisko[128];
 	int wiek;
 	kierunek kierunekStudiow;
 	printf("Podaj nazwisko:");
@@ -93,6 +93,11 @@ void find() {
 	}
 	student searchData;
 	memset(&searchData, 0, sizeof(student));
+	searchData.nazwisko = (char*)malloc((strlen(nazwisko2) + 1) * sizeof(char));
+	if (!searchData.nazwisko) {
+		messageFun(ALLOC_ERROR);
+		return;
+	}
 	strcpy_s(searchData.nazwisko, sizeof(searchData.nazwisko), nazwisko2);
 	
 	void* ptrData = stackSearch(&searchData, studentSearch, 1);

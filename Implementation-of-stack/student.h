@@ -8,7 +8,8 @@ enum kierunek
 
 	struct student
 	{
-		char nazwisko[512];
+		char* nazwisko;
+		unsigned int len;
 		int wiek;
 		kierunek kierunekStudiow;
 	};

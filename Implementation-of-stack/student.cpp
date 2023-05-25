@@ -8,7 +8,13 @@
 void* studentInit(char* nazwisko2, int  wiek2, kierunek kierunekStudiow2) {
 	student* studentPtr = (student*)malloc(sizeof(student));
 	if (studentPtr) {
-		strcpy_s(studentPtr->nazwisko, sizeof(studentPtr->nazwisko), nazwisko2);
+		studentPtr->nazwisko = (char*)malloc((strlen(nazwisko2) + 1) * sizeof(char));
+		if (!studentPtr->nazwisko) {
+			free(studentPtr);
+			return NULL;
+		}
+		strcpy_s(studentPtr->nazwisko, strlen(nazwisko2) + 1, nazwisko2);
+		studentPtr->len = strlen(nazwisko2);
 		studentPtr->wiek = wiek2;
 		studentPtr->kierunekStudiow = kierunekStudiow2;
 	}
