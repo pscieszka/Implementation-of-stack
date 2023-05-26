@@ -67,16 +67,20 @@ void  saveStudentToFile(const char* filename, void* ptr) {
 		return;
 	}
 
-	struct student* stud = (struct student*)ptr;
+	student* stud = (student*)ptr;
 	FILE* file;
 	if (fopen_s(&file, filename, "wb") != 0)
 	{
 		messageFun(ALLOC_ERROR);
 		return;
 	}
-	
+	size_t size = strlen(stud->nazwisko) + 1;
+	fwrite(&size, sizeof(size_t), 1, file);
+	fwrite(stud->nazwisko, sizeof(char), size, file);
+	fwrite(&(stud->len), sizeof(size_t), 1, file);
+	fwrite(&(stud->wiek), sizeof(int), 1, file);
+	fwrite(&(stud->kierunekStudiow), sizeof(kierunek), 1, file);
 
-	fwrite(stud, sizeof(struct student), 1, file);
 	fclose(file);
 }
 
@@ -85,19 +89,32 @@ void* loadStudentFromFile(const char* filename) {
 	FILE* file;
 	if (fopen_s(&file, filename, "rb") != 0)
 	{
-		printf("Error, file.\n");
+		messageFun(FILE_OPEN_FAILED);
 		return NULL;
 	}
 
-	struct student* stud = (struct student*)malloc(sizeof(struct student));
+	student* stud = (student*)malloc(sizeof(student));
 	if (stud == NULL)
 	{
-		printf("Memory allocation failed.\n");
 		fclose(file);
+		messageFun(ALLOC_ERROR);
 		return NULL;
 	}
 
-	fread(stud, sizeof(struct student), 1, file);
+	size_t size;
+	fread(&size, sizeof(size_t), 1, file);
+	stud->nazwisko = (char*)malloc(size * sizeof(char)); //alokujemy pamiec dla skladowej strukutry 'nazwisko'
+	if (!stud->nazwisko) {
+		fclose(file);
+		free(stud);
+		messageFun(ALLOC_ERROR);
+		return NULL;
+	}
+
+	fread(stud->nazwisko, sizeof(char), size, file);
+	fread(&(stud->len), sizeof(size_t), 1, file);
+	fread(&(stud->wiek), sizeof(int), 1, file);
+	fread(&(stud->kierunekStudiow), sizeof(kierunek), 1, file);
 	fclose(file);
 
 

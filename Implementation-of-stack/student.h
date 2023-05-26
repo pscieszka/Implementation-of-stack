@@ -1,4 +1,7 @@
 #pragma once
+
+#pragma warning (disable : 4996)
+
 enum kierunek
 {
 	INFORMATYKA,
@@ -9,7 +12,7 @@ enum kierunek
 	struct student
 	{
 		char* nazwisko;
-		unsigned int len;
+		size_t len;
 		int wiek;
 		kierunek kierunekStudiow;
 	};

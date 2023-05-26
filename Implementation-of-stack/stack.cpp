@@ -83,25 +83,28 @@ void* stackSearch(void* searchData, compData ptrComp, int firstEntry) {
 	
 
 }
-void stackSave(const char* filename) {
-	FILE* file;
-	if (fopen_s(&file, filename, "wb") != 0)
-	{
-		messageFun(FILE_OPEN_FAILED);
+
+void stackSave( const char* filename) {
+	FILE* file = fopen(filename, "wb");  
+
+	if (file == NULL) {
+		printf("Nie mo¿na otworzyæ pliku.\n");
 		return;
 	}
 
-	stack* curr = top;
-	while (curr != NULL) {
-		struct student* stud = (struct student*)(curr->dataPtr);
-		fwrite(stud, sizeof(struct student), 1, file);
-		curr = curr->next;
+	stack* current = top;
+	while (current != NULL) {
+		student* studentData = (student*)current->dataPtr;
+
+		fwrite(studentData->nazwisko, sizeof(char), studentData->len, file);
+		fwrite(&(studentData->wiek), sizeof(int), 1, file);
+		fwrite(&(studentData->kierunekStudiow), sizeof(kierunek), 1, file);
+		fwrite(&(studentData->len), sizeof(size_t), 1, file);
+		current = current->next;
 	}
 
-	fclose(file);
-	stackFree();
+	fclose(file);  
 }
-
 void stackRead(const char* filename) {
 	FILE* file;
 	if (fopen_s(&file, filename, "rb") != 0) {
@@ -109,14 +112,14 @@ void stackRead(const char* filename) {
 		return;
 	}
 
-	
+
 	if (fseek(file, 0, SEEK_END) != 0) {
 		messageFun(FILE_OPERATION_FAILED);
 		fclose(file);
 		return;
 	}
 
-	//obliczanie wielkosc wielkosci pliku, wskaznik jest ustawiony na koniec pliku,a funkcja ftell podaje liczbe bajtow calego pliku
+	
 	long fileSize = ftell(file);
 	if (fileSize == -1) {
 		messageFun(FILE_OPERATION_FAILED);
@@ -124,28 +127,94 @@ void stackRead(const char* filename) {
 		return;
 	}
 
-	//wielkosc jedngo rekordu jest rowna wielkosci struktury student, przesuwamy wskaznik w pliku o wielkosc jednej struktury w prawo
-	int recordSize = sizeof(struct student);
-	fseek(file, -recordSize, SEEK_END); 
-
+	long long recordSize=0;
 	
+	student* stud = NULL;
 	while (fileSize > 0) {
-		struct student* stud = (struct student*)malloc(recordSize);
-		if (stud == NULL) {
+		size_t nameSize = 0;
+		if (fseek(file, -(long long)sizeof(size_t), SEEK_CUR) != 0) { 
+			messageFun(FILE_OPERATION_FAILED);
+			fclose(file);
+			free(stud);
+			return;
+		}
+		//czytam od tylu pliku wielkosc ostatniego nazwiska
+		if (fread(&nameSize, sizeof(size_t), 1, file) != 1) { 
+			messageFun(READ_FROM_FILE_FAILED);
+			fclose(file);
+			free(stud);
+			return;
+		}
+		// znajac dlugosc nazwiska moge policzyc ile zajmuje ostatni rekord
+		long long recordSize = nameSize + sizeof(int) + sizeof(kierunek) + sizeof(size_t); 
+		if (fseek(file, -recordSize, SEEK_CUR) != 0) {
+			messageFun(FILE_OPERATION_FAILED);
+			fclose(file);
+			free(stud);
+			return;
+		}
+		//alokuje pamiec dla nazwiska i struktury student, oraz znajac kolejnosc zapisu skladowych struktury 
+		stud = (student*)malloc(sizeof(student));
+		stud->nazwisko = (char*)malloc(nameSize + 1);
+		if (stud == NULL || stud->nazwisko == NULL) {
 			messageFun(ALLOC_ERROR);
 			fclose(file);
-			return;
-		}
-
-		if (fread(stud, recordSize, 1, file) != 1) {
-			messageFun(READ_FROM_FILE_FAILED);
-
 			free(stud);
-			fclose(file);
 			return;
 		}
 
+		if (fread(stud->nazwisko, sizeof(char), nameSize, file) != nameSize) {
+			messageFun(READ_FROM_FILE_FAILED);
+			fclose(file);
+			free(stud->nazwisko);
+			free(stud);
+			return;
+		}
+
+		stud->nazwisko[nameSize] = '\0';
+
+		if (fread(&(stud->wiek), sizeof(int), 1, file) != 1) {
+			messageFun(READ_FROM_FILE_FAILED);
+			fclose(file);
+			free(stud->nazwisko);
+			free(stud);
+			return;
+		}
+
+		if (fread(&(stud->kierunekStudiow), sizeof(kierunek), 1, file) != 1) {
+			messageFun(READ_FROM_FILE_FAILED);
+			fclose(file);
+			free(stud->nazwisko);
+			free(stud);
+			return;
+		}
+
+		if (fread(&(stud->len), sizeof(size_t), 1, file) != 1) {
+			messageFun(READ_FROM_FILE_FAILED);
+			fclose(file);
+			free(stud->nazwisko);
+			free(stud);
+			return;
+		}
+		if (fseek(file, -recordSize, SEEK_CUR) != 0) {
+			messageFun(FILE_OPERATION_FAILED);
+			fclose(file);
+			free(stud);
+			return;
+		}
 		stackPush(stud);
+		fileSize -= recordSize;
+	}
+
+	fclose(file);
+}
+
+
+
+
+
+
+//stackPush(stud);
 
 		//wskaznik musi byc przesniuty o 2 wielkosci strukutry, poniewaz po wczytaniu studenta wskaznik przesuwa sie o recordSize w lewo,
 		//wiec zeby odczytac nastepnego studenta musimy przesunac sie o 2*recordSize w prawo
@@ -158,10 +227,6 @@ void stackRead(const char* filename) {
 		//	   ^	
 		//itd...
 
-		fseek(file, -2 * recordSize, SEEK_CUR);
+		//fseek(file, -2 * recordSize, SEEK_CUR);
 		// Aktualizujemy liczby studentow do wczytania
-		fileSize -= recordSize;
-	}
-
-	fclose(file);
-}
+		//fileSize -= recordSize;

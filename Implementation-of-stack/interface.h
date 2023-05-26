@@ -1,5 +1,8 @@
 #pragma once
 
+#pragma warning (disable : 4996)
+
+
 enum interface {
 	PUSH,
 	POP,

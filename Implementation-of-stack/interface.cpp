@@ -133,10 +133,14 @@ void show() {
 }
 
 void readStack() {
+	if (stackTop()) {
+		stackFree();
+	}
 	stackRead("stackdata.bin");
 }
 
 void saveStack() {
+	
 	stackSave("stackdata.bin");
 }
 
