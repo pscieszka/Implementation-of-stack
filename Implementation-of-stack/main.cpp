@@ -25,9 +25,9 @@ int main() {
 				break;
 			case SHOW: show(); //wyswietlanie calego stosu
 				break;
-			case READ_STACK: readStack(); // zapisanie calego stosu do pliku
+			case READ_STACK: readStack(); // odczytanie calego stosu, po odczytaniu obecne dane sie usuna 
 				break;
-			case SAVE_STACK: saveStack(); //wczytanie calego pliku do stosu
+			case SAVE_STACK: saveStack(); //wczytanie calego stosu do pliku
 				break;
 			case READ_ONE_STUDENT: readStudent(); // zapis jednego studenta do pliku
 				break;
