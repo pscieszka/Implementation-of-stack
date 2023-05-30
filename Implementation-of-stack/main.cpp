@@ -29,9 +29,9 @@ int main() {
 				break;
 			case SAVE_STACK: saveStack(); //wczytanie calego stosu do pliku
 				break;
-			case READ_ONE_STUDENT: readStudent(); // zapis jednego studenta do pliku
+			case READ_ONE_STUDENT: readStudent(); // zapis jednego studenta do pliku , gdy zapiszemy studenta do pliku zostanie uzyta funkcja pop
 				break;
-			case SAVE_ONE_STUDENT: saveStudent(); // wczytanie jednego studenta z pliku do stosu
+			case SAVE_ONE_STUDENT: saveStudent(); // wczytanie jednego studenta z pliku do stosu, wczytywac dane studenta mozna bez  konca (obecny stos nie usuwa sie, w przeciwienstwie do save stack)
 				break;
 			case CLEAR_FILES: deleteFiles(); // usuwanie plikow z danymi
 				break;

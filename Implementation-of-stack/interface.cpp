@@ -28,9 +28,7 @@ const int menuSize = sizeof(tab) / sizeof(tab[0]);
 void menu() {
 	printf("Wybierz opcje:\n");
 	for (int i = 0; i < menuSize; i++) {
-		if (tab[i] == "7. Read student to file")
-			printf("7. Read student to file - zapis/odczyt maksymalnie 1 rekordu(read->stackPush, save->stackPop)\n");
-		else
+	
 			printf("%s\n", tab[i]);
 		
 	}
